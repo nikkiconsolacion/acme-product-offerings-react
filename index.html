@@ -12,9 +12,11 @@
       #nav {
         display: flex;
         justify-content: space-around;
+        background-color: tomato;
       }
       a {
         padding: 1rem;
+        color: white;
       }
     </style>
   </head>
@@ -29,10 +31,26 @@
       const Nav = ({companies, products})=> {
         return (
           <div id='nav'>
+            <h2>Acme Offerings * React</h2>
             <Link to='/companies'>Companies ({ companies.length })</Link>
             <Link to='/products'>Products ({ products.length })</Link>
           </div>
         )
+      }
+
+      const Companies = ({ companies })=> {
+        return (
+          <ul>
+            {
+              companies.map( company =>
+                <li key={ company.id }>
+                    <div>{ company.name }</div>
+                    <div>{ company.catchPhrase }</div>
+                </li>
+              )
+            }
+          </ul>
+        );
       }
 
       class App extends Component{
@@ -59,6 +77,9 @@
           return (
             <HashRouter>
               <Route render={()=> <Nav companies={ companies } products={ products } /> } />
+              <Switch>
+                <Route path='/companies' render={()=> <Companies companies={ companies } /> } />
+              </Switch>
             </HashRouter>
           )
         }
